@@ -1,0 +1,60 @@
+body {
+	font-family: 微软雅黑;
+}
+
+.b1 {
+	border: 1px solid #ccc;
+}
+
+.bg {
+	background: #eee;
+}
+
+.br3 {
+	border-radius: 3px
+}
+
+.bw {
+	background: white;
+}
+
+.cm {
+	cursor: move;
+}
+
+.cp {
+	cursor: pointer;
+}
+
+.dib {
+	display: inline-block;
+}
+
+.dt {
+	display: table-row;
+}
+
+.m10 {
+	margin: 10px;
+}
+
+.p10 {
+	padding: 10px;
+}
+
+.pa {
+	position: absolute;
+}
+
+.pr {
+	position: relative;
+}
+
+.ui-state-hover {
+	background: #0e0;
+}
+
+.vat {
+	vertical-align: top;
+}
+
