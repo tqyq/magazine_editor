@@ -4,53 +4,105 @@
 <title>magazine editor</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/main.css">
-<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.10.4.min.js"></script>
 </head>
 <body>
-	<div class="br3 b1 p10 bg dib vat" style="width: 100px;">
+	<div class="br3 b1s p10 bg dib vat" style="width: 100px;">
 		<div>组件栏</div>
-		<div id="tt" class="m10 p10 bw draggable">文字</div>
-		<div id="ti" class="m10 p10 bw draggable">图片</div>
-		<div id="tv" class="m10 p10 bw draggable">视频</div>
+		<div tp="tt" class="m10 p10 bw draggable">文字</div>
+		<img tp="ti" class="m10 bw draggable" title="图片" src="img/ti.png" style="width: 80px;">
+		<video tp="tv" class="m10 bw draggable" title="视频" src="img/video.mp4" controls style="width: 80px;">
+		您的浏览器不支持 video 标签。
+		</video>
 	</div>
-	<div class="br3 b1 p10 bg dib vat" style="width: 400px;">
+	<div class="br3 b1s p10 bg dib vat" style="width: 600px;">
 		<div>编辑栏</div>
-		<div id="ec" class="b1 bw " style="width: 100%; height: 300px;"></div>
+		<div id="ec" class="b1s bw " style="width: 100%; height: 400px; overflow: scroll;"></div>
 	</div>
-	<div class="br3 b1 p10 bg dib vat" style="width: 200px;">
+	<div class="br3 b1s p10 bg dib vat" style="width: 300px;">
 		<div>属性栏</div>
+		<div class="dib vat">内容</div>
+		<div class="dib vat">
+			<textarea id="pcontent" rows="5" cols="20"></textarea>
+		</div>
+		<br>
 		<div class="dib">宽度</div>
 		<div class="dib">
 			<input id="pw" type="text" >
 		</div>
+		<br>
 		<div class="dib">高度</div>
 		<div class="dib">
 			<input id="ph" type="text" >
 		</div>
+		<br>
+		<div class="dib"></div>
+		<div class="dib">
+			<input type="radio" id="palign1" name="palign" checked="checked"><label for="palign1">左对齐</label>
+		    <input type="radio" id="palign2" name="palign" ><label for="palign2">居中</label>
+		    <input type="radio" id="palign3" name="palign"><label for="palign3">右对齐</label>
+		</div>
 	</div>
 </body>
+<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.10.4.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 <script>
+	var curr;
+	function bindVal(c) {
+		curr = c;
+		$('#pw').val(c.width());
+		$('#ph').val(c.height());
+		switch (c.attr('tp')) {
+  		case "tt":
+  			c.attr("contenteditable", "true");
+  			$('#pcontent').val(c.text());
+  			break;
+  		case "ti":
+  			$('#pcontent').val(c.attr('src'));
+  			break;
+  		case "tv":
+  			$('#pcontent').val(c.attr('src'));
+  			break;
+		}
+		$('.b1d').removeClass('b1d');
+		c.addClass('b1d');
+	}
+	function updateCurr() {
+		if (curr != null) {
+			var v = $('#pcontent').val();
+			switch (curr.attr('tp')) {
+	  		case "tt":
+	  			curr.text(v);
+	  			break;
+	  		case "ti":
+	  			curr.attr('src', v);
+	  			break;
+	  		case "tv":
+	  			curr.attr('src', v);
+	  			break;
+			}
+		}
+	}
 	$(function() {
-		$( ".draggable" ).draggable({ cursor: "move", opacity: 0.7, helper: "clone" });
+		$('#pcontent').on('input propertychange', function() {
+			updateCurr();
+		});
+		$(".draggable").draggable({ cursor: "move", opacity: 0.7, helper: "clone" });
 		$("#ec").droppable({
 			accept: ".draggable",
 		    hoverClass: "ui-state-hover",
 	      	drop: function(event, ui) {
 	      		var c = ui.draggable.clone();
 	      		c.removeAttr('class');
-	      		c.removeAttr('id');
-	      		//c.attr("contenteditable", "true");
-	      		c.addClass('pr');
-	      		c.sortable();
+	      		c.addClass('db');
+	      		c.width(160);
 	      		c.on('click', function() {
-	      			$('#pw').val(c.width());
-	      			$('#ph').val(c.height());
+	      			bindVal(c);
 	      		});
-	      		
 	      		$(this).append(c);
+	      		bindVal(c);
 	      	}
-	    });
+	    }).sortable();
 	});
 </script>
 </html>
