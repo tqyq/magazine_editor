@@ -46,6 +46,14 @@ body {
 	margin: 10px;
 }
 
+.oys {
+	overflow-y: scroll;
+}
+
+.oxs {
+	overflow-x: scroll;
+}
+
 .p10 {
 	padding: 10px;
 }
