@@ -14,9 +14,9 @@
 		您的浏览器不支持 video 标签。
 		</video>
 	</div>
-	<div class="br3 b1s p10 bg dib vat" style="width: 600px;">
+	<div class="br3 b1s p10 bg dib vat" style=" ">
 		<div>编辑栏</div>
-		<div id="ec" class="b1s bw oys" style="width: 100%; height: 400px;"></div>
+		<div id="ec" class="b1s bw oys" style="width: 340px; height: 480px;"></div>
 	</div>
 	<div class="br3 b1s p10 bg dib vat" style="width: 300px;">
 		<div>属性栏</div>
@@ -37,9 +37,9 @@
 		<br>
 		<div class="dib"></div>
 		<div class="dib">
-			<input type="radio" id="palign1" name="palign" checked="checked"><label for="palign1">左对齐</label>
-		    <input type="radio" id="palign2" name="palign" ><label for="palign2">居中</label>
-		    <input type="radio" id="palign3" name="palign"><label for="palign3">右对齐</label>
+			<input type="radio" id="palign1" name="palign" checked="checked" value="left"><label for="palign1">左对齐</label>
+		    <input type="radio" id="palign2" name="palign" value="center" ><label for="palign2">居中</label>
+		    <input type="radio" id="palign3" name="palign" value="right"><label for="palign3">右对齐</label>
 		</div>
 	</div>
 </body>
@@ -47,6 +47,7 @@
 <script type="text/javascript" src="js/jquery-ui-1.10.4.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 <script>
+	var cw = 320;
 	var curr;
 	function bindVal(c) {
 		curr = c;
@@ -70,6 +71,12 @@
 	function updateCurr() {
 		if (curr != null) {
 			var v = $('#pcontent').val();
+			var w = $('#pw').val();
+			var h = $('#ph').val();
+			var align = $('input[name=palign]:checked').val();
+			curr.css('text-align',align);
+			curr.width(w);
+			curr.height(h);
 			switch (curr.attr('tp')) {
 	  		case "tt":
 	  			curr.text(v);
@@ -84,7 +91,7 @@
 		}
 	}
 	$(function() {
-		$('#pcontent').on('input propertychange', function() {
+		$('#pcontent, #pw, #ph, input[name=palign]').on('input propertychange change', function() {
 			updateCurr();
 		});
 		$(".draggable").draggable({ cursor: "move", opacity: 0.7, helper: "clone" });
@@ -95,7 +102,7 @@
 	      		var c = ui.draggable.clone();
 	      		c.removeAttr('class');
 	      		c.addClass('db');
-	      		c.width(160);
+	      		c.width(cw);
 	      		c.on('click', function() {
 	      			bindVal(c);
 	      		});
